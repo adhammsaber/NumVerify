@@ -13,19 +13,7 @@ URoute.get('/SignUp/UserName:UserName/Password:Password',async function(req,res)
         const salt = await bcrypt.genSalt(10);
         user.Password = await bcrypt.hash(user.Password, salt);
         const saveduser = await user.save();
-        const payload = {
-            user: {
-              id: saveduser._id,
-              userName: saveduser.UserName,
-            },
-          };
-          const options = {
-            expiresIn: '1h', // The token will expire in 1 hour
-          };
-          const token = jwt.sign(payload, secretKey, options);
-          saveduser.Token = token;
-          await saveduser.save();
-          res.send({saveduser,token})
+          res.send(saveduser)
     } catch (error) {
         console.error(error);
         res.status(500).send('Server error');
@@ -40,7 +28,19 @@ URoute.get('/LoggedIn/UserName:UserName/Password:Password',async function(req,re
             if (user) {
                 const isMatch = await bcrypt.compare(Password, user.Password);
                 if (isMatch) {
-                    res.status(201).send(user);
+                    const payload = {
+                        user: {
+                          id: user._id,
+                          userName: user.UserName,
+                        },
+                      };
+                      const options = {
+                        expiresIn: '1h', // The token will expire in 24 hour
+                      };
+                      const token = jwt.sign(payload, secretKey, options);
+                      user.Token = token;
+                      console.log(token)
+                    res.status(201).send({token});
                 } else {
                     res.status(401).send('Invalid Password');
                 }

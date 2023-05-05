@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const RequireAuth = ({ component: Component, token }) => {
-  const history = useHistory();
-
-  useEffect(() => {
+const RequireAuth = (WrappedComponent) => {
+  const AuthenticatedComponent = (props) => {
+    const token = useSelector((state) => state.token);
     if (!token) {
-      history.push('/login');
+      return <Navigate to="/" />;
+    } else {
+      return <WrappedComponent {...props} />;
     }
-  }, [token, history]);
+  };
 
-  return <>{token ? <Component /> : null}</>;
+  return AuthenticatedComponent;
 };
 
 export default RequireAuth;

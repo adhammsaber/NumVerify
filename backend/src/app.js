@@ -5,6 +5,8 @@ const cors = require('cors');
 var bodyParser = require('body-parser');
 
 const userRoute = require('./Routes/UserRoute')
+const searchRoute = require('./Routes/SearchRoute')
+
 mongoURl = "mongodb+srv://adham:alovek12345@cluster0.yk4zq.mongodb.net/NumVerify_DataBase"
 mongoose.connect(mongoURl)
 .then(()=>{
@@ -19,3 +21,4 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(bodyParser.json())
  app.use(userRoute);
+ app.use(searchRoute);
