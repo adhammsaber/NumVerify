@@ -4,7 +4,6 @@ import RequireAuth from '../Components/HOC/RequireAuth';
 import './SearchResults.css'
 function SearchResults() {
     const location = useLocation();
-    // alert(location.state.valid)
   return (
     <div>
         <div class="cardBox">

@@ -32,7 +32,6 @@ function Login() {
       console.log('Token dispatched:', token);
       navigate('/search')
     } catch (error) {
-      alert(error)
       alert('Invalid username or password');
     }
   }

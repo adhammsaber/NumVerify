@@ -20,7 +20,6 @@ function SearchPage() {
     await axios.get(`http://localhost:5000/saveNumber/valid${result.valid}/number${phoneNumber}`)
     navigate('/searchresult',{state:result})
     setloading(false)
-    // setApiResponse(result)
   }
   return (
           
